@@ -2,6 +2,7 @@ package pbo.views;
 
 import pbo.controllers.MarketController;
 import pbo.models.Product;
+import pbo.models.MarketException;
 import pbo.util.InputUtil;
 import java.util.List;
 
@@ -50,28 +51,33 @@ public class MarketView {
         double harga = InputUtil.inputDouble("Masukkan Harga (Rp): ");
         int stok = InputUtil.inputInt("Masukkan Stok: ");
 
-        switch (catChoice) {
-            case 1:
-                String rasa = InputUtil.inputString("Masukkan Rasa: ");
-                double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
-                controller.addMie(id, nama, harga, stok, rasa, beratMie);
-                System.out.println("-> Produk Mie berhasil ditambahkan!");
-                break;
-            case 2:
-                String jenis = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
-                double beratBuah = InputUtil.inputDouble("Masukkan Berat (kg): ");
-                String kadaluarsaBuah = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                controller.addBuahBuahan(id, nama, harga, stok, jenis, beratBuah, kadaluarsaBuah);
-                System.out.println("-> Produk Buah-buahan berhasil ditambahkan!");
-                break;
-            case 3:
-                double suhu = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
-                String kadaluarsaFrozen = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                controller.addFrozenFood(id, nama, harga, stok, suhu, kadaluarsaFrozen);
-                System.out.println("-> Produk Frozen Food berhasil ditambahkan!");
-                break;
-            default:
-                System.out.println("Kategori tidak valid!");
+        // Implementasi try-catch untuk Exception Handling
+        try {
+            switch (catChoice) {
+                case 1:
+                    String rasa = InputUtil.inputString("Masukkan Rasa: ");
+                    double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
+                    controller.addMie(id, nama, harga, stok, rasa, beratMie);
+                    System.out.println("-> Produk Mie berhasil ditambahkan!");
+                    break;
+                case 2:
+                    String jenis = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
+                    double beratBuah = InputUtil.inputDouble("Masukkan Berat (kg): ");
+                    String kadaluarsaBuah = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
+                    controller.addBuahBuahan(id, nama, harga, stok, jenis, beratBuah, kadaluarsaBuah);
+                    System.out.println("-> Produk Buah-buahan berhasil ditambahkan!");
+                    break;
+                case 3:
+                    double suhu = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
+                    String kadaluarsaFrozen = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
+                    controller.addFrozenFood(id, nama, harga, stok, suhu, kadaluarsaFrozen);
+                    System.out.println("-> Produk Frozen Food berhasil ditambahkan!");
+                    break;
+                default:
+                    System.out.println("Kategori tidak valid!");
+            }
+        } catch (MarketException e) {
+            System.out.println("[ERROR] Terjadi kesalahan validasi: " + e.getMessage());
         }
     }
 
