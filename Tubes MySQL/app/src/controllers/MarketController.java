@@ -1,14 +1,13 @@
 package pbo.controllers;
 
 import pbo.models.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MarketController {
-    private List<Product> productList;
+    private MarketContainer<Product> productContainer;
 
     public MarketController() {
-        this.productList = new ArrayList<>();
+        this.productContainer = new MarketContainer<>();
     }
 
     public void addMie(String id, String nama, double harga, int stok, String rasa, double berat) throws MarketException {
@@ -16,7 +15,7 @@ public class MarketController {
             throw new MarketException("Harga dan stok Mie tidak boleh bernilai negatif!");
         }
         Product mie = new Mie(id, nama, harga, stok, rasa, berat);
-        productList.add(mie);
+        productContainer.addItem(mie);
     }
 
     public void addBuahBuahan(String id, String nama, double harga, int stok, String jenis, double berat, String kadaluarsa) throws MarketException {
@@ -24,7 +23,7 @@ public class MarketController {
             throw new MarketException("Harga dan stok Buah-buahan tidak boleh bernilai negatif!");
         }
         Product buah = new BuahBuahan(id, nama, harga, stok, jenis, berat, kadaluarsa);
-        productList.add(buah);
+        productContainer.addItem(buah);
     }
 
     public void addFrozenFood(String id, String nama, double harga, int stok, double suhu, String kadaluarsa) throws MarketException {
@@ -32,10 +31,10 @@ public class MarketController {
             throw new MarketException("Harga dan stok Frozen Food tidak boleh bernilai negatif!");
         }
         Product frozen = new FrozenFood(id, nama, harga, stok, suhu, kadaluarsa);
-        productList.add(frozen);
+        productContainer.addItem(frozen);
     }
 
     public List<Product> getAllProducts() {
-        return this.productList;
+        return productContainer.getItems();
     }
 }

@@ -3,6 +3,7 @@ package pbo.views;
 import pbo.controllers.MarketController;
 import pbo.models.Product;
 import pbo.models.MarketException;
+import pbo.models.MarketContainer;
 import pbo.util.InputUtil;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class MarketView {
     public void showMenu() {
         boolean running = true;
         while (running) {
-            System.out.println("\n=== MENU UTAMA MINI MARKET ===");
+            System.out.println("\n=== MENU UTAMA MINI MARKET (MVC + Exception + Generics) ===");
             System.out.println("1. Tambah Produk");
             System.out.println("2. Print Semua Produk");
             System.out.println("3. Keluar");
@@ -51,7 +52,6 @@ public class MarketView {
         double harga = InputUtil.inputDouble("Masukkan Harga (Rp): ");
         int stok = InputUtil.inputInt("Masukkan Stok: ");
 
-        // Implementasi try-catch untuk Exception Handling
         try {
             switch (catChoice) {
                 case 1:
@@ -86,6 +86,7 @@ public class MarketView {
         if (products.isEmpty()) {
             System.out.println("Belum ada produk yang terdaftar.");
         } else {
+            // Menggunakan Generic Wildcard untuk menampilkan detail produk
             for (Product p : products) {
                 System.out.println("• " + p.getProductDetail());
             }
