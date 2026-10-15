@@ -3,7 +3,6 @@ package pbo.views;
 import pbo.controllers.MarketController;
 import pbo.models.Product;
 import pbo.models.MarketException;
-import pbo.models.MarketContainer;
 import pbo.util.InputUtil;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class MarketView {
     public void showMenu() {
         boolean running = true;
         while (running) {
-            System.out.println("\n=== MENU UTAMA MINI MARKET (MVC + Exception + Generics) ===");
+            System.out.println("\n=== MENU UTAMA MINI MARKET (SOLID + Factory Pattern) ===");
             System.out.println("1. Tambah Produk");
             System.out.println("2. Print Semua Produk");
             System.out.println("3. Keluar");
@@ -52,30 +51,34 @@ public class MarketView {
         double harga = InputUtil.inputDouble("Masukkan Harga (Rp): ");
         int stok = InputUtil.inputInt("Masukkan Stok: ");
 
+        String param1 = "";
+        double param2 = 0.0;
+        String kadaluarsa = "";
+
         try {
             switch (catChoice) {
                 case 1:
-                    String rasa = InputUtil.inputString("Masukkan Rasa: ");
-                    double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
-                    controller.addMie(id, nama, harga, stok, rasa, beratMie);
-                    System.out.println("-> Produk Mie berhasil ditambahkan!");
+                    param1 = InputUtil.inputString("Masukkan Rasa: ");
+                    param2 = InputUtil.inputDouble("Masukkan Berat (gram): ");
                     break;
                 case 2:
-                    String jenis = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
-                    double beratBuah = InputUtil.inputDouble("Masukkan Berat (kg): ");
-                    String kadaluarsaBuah = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                    controller.addBuahBuahan(id, nama, harga, stok, jenis, beratBuah, kadaluarsaBuah);
-                    System.out.println("-> Produk Buah-buahan berhasil ditambahkan!");
+                    param1 = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
+                    param2 = InputUtil.inputDouble("Masukkan Berat (kg): ");
+                    kadaluarsa = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
                     break;
                 case 3:
-                    double suhu = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
-                    String kadaluarsaFrozen = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                    controller.addFrozenFood(id, nama, harga, stok, suhu, kadaluarsaFrozen);
-                    System.out.println("-> Produk Frozen Food berhasil ditambahkan!");
+                    param2 = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
+                    kadaluarsa = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
                     break;
                 default:
                     System.out.println("Kategori tidak valid!");
+                    return;
             }
+
+            // Memanggil controller yang dibantu oleh Factory Pattern
+            controller.addProduct(catChoice, id, nama, harga, stok, param1, param2, kadaluarsa);
+            System.out.println("-> Produk berhasil ditambahkan via ProductFactory!");
+
         } catch (MarketException e) {
             System.out.println("[ERROR] Terjadi kesalahan validasi: " + e.getMessage());
         }
@@ -86,7 +89,6 @@ public class MarketView {
         if (products.isEmpty()) {
             System.out.println("Belum ada produk yang terdaftar.");
         } else {
-            // Menggunakan Generic Wildcard untuk menampilkan detail produk
             for (Product p : products) {
                 System.out.println("• " + p.getProductDetail());
             }
