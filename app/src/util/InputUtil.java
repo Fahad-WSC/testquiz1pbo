@@ -1,33 +1,34 @@
-package src.util;
+package pbo.util;
 
 import java.util.Scanner;
 
 public class InputUtil {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public static String readLine() {
-        return scanner.nextLine().trim();
+    public static String inputString(String message) {
+        System.out.print(message);
+        return scanner.nextLine();
     }
 
-    public static int readInt() {
-        while (true) {
-            try {
-                int value = Integer.parseInt(scanner.nextLine().trim());
-                return value;
-            } catch (NumberFormatException e) {
-                System.out.print("Input harus berupa angka integer, masukkan lagi: ");
-            }
+    public static int inputInt(String message) {
+        System.out.print(message);
+        while (!scanner.hasNextInt()) {
+            System.out.print("Input tidak valid. Masukkan angka bulat: ");
+            scanner.next();
         }
+        int value = scanner.nextInt();
+        scanner.nextLine();
+        return value;
     }
 
-    public static double readDouble() {
-        while (true) {
-            try {
-                double value = Double.parseDouble(scanner.nextLine().trim());
-                return value;
-            } catch (NumberFormatException e) {
-                System.out.print("Input harus berupa angka desimal/bulat, masukkan lagi: ");
-            }
+    public static double inputDouble(String message) {
+        System.out.print(message);
+        while (!scanner.hasNextDouble()) {
+            System.out.print("Input tidak valid. Masukkan angka: ");
+            scanner.next();
         }
+        double value = scanner.nextDouble();
+        scanner.nextLine();
+        return value;
     }
 }

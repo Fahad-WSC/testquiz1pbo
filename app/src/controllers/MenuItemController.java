@@ -1,0 +1,52 @@
+package pbo.controllers;
+
+import pbo.models.*;
+import pbo.exceptions.InputTidakValidException;
+import pbo.exceptions.StokTidakCukupException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MenuItemController {
+    private List<MenuItem> menuItems;
+
+    public MenuItemController() {
+        this.menuItems = new ArrayList<>();
+    }
+
+    public void addKopi(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+        if (jumlah < 0 ) {
+            throw new InputTidakValidException("JumlahTidak boleh 0");
+        } 
+        if (jumlah > stok) {
+            throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
+        }
+        MenuItem kopi = new Kopi(id, nama, harga, stok, rasa, jumlah);
+        menuItems.add(kopi);
+    }
+
+    public void addTeh(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+        if (jumlah < 0 ) {
+            throw new InputTidakValidException("JumlahTidak boleh 0");
+        } 
+        if (jumlah > stok) {
+            throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
+        }
+        MenuItem teh = new Teh(id, nama, harga, stok, rasa, jumlah);
+        menuItems.add(teh);
+    }
+
+    public void addRoti(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+        if (jumlah < 0 ) {
+            throw new InputTidakValidException("Jumlah Tidak boleh 0");
+        }
+        if (jumlah > stok ) {
+            throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
+        }
+        MenuItem roti = new Roti(id, nama, harga, stok, rasa, jumlah);
+        menuItems.add(roti);
+    }
+
+    public List<MenuItem> getAllMenuItems() {
+        return this.menuItems;
+    }
+}
