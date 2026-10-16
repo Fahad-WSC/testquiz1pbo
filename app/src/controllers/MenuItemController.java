@@ -13,36 +13,36 @@ public class MenuItemController {
         this.menuItems = new ArrayList<>();
     }
 
-    public void addKopi(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addKopi(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
         if (jumlah < 0 ) {
             throw new InputTidakValidException("JumlahTidak boleh 0");
         } 
         if (jumlah > stok) {
             throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
         }
-        MenuItem kopi = new Kopi(id, nama, harga, stok, rasa, jumlah);
+        MenuItem kopi = new Kopi(id, nama, hargaBase, stok, rasa, jumlah);
         menuItems.add(kopi);
     }
 
-    public void addTeh(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addTeh(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
         if (jumlah < 0 ) {
             throw new InputTidakValidException("JumlahTidak boleh 0");
         } 
         if (jumlah > stok) {
             throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
         }
-        MenuItem teh = new Teh(id, nama, harga, stok, rasa, jumlah);
+        MenuItem teh = new Teh(id, nama, hargaBase, stok, rasa, jumlah);
         menuItems.add(teh);
     }
 
-    public void addRoti(String id, String nama, double harga, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addRoti(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
         if (jumlah < 0 ) {
             throw new InputTidakValidException("Jumlah Tidak boleh 0");
         }
         if (jumlah > stok ) {
             throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
         }
-        MenuItem roti = new Roti(id, nama, harga, stok, rasa, jumlah);
+        MenuItem roti = new Roti(id, nama, hargaBase, stok, rasa, jumlah);
         menuItems.add(roti);
     }
 

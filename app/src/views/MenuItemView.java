@@ -16,21 +16,25 @@ public class MenuItemView {
     public void showMenu() {
         boolean running = true;
         while (running) {
-            System.out.println("1. Tambah Menu");
-            System.out.println("2. Print Semua Menu");
-            System.out.println("3. Keluar");
-            int choice = InputUtil.inputInt("Pilih menu (1-3): ");
+            System.out.println("1. Tambah Pesanan");
+            System.out.println("2. Kustomisasi Pesanan");
+            System.out.println("3. Lihat Daftar Pesanan");
+            System.out.println("4. Keluar");
+            int choice = InputUtil.inputInt("Pilih menu (1-4): ");
 
             switch (choice) {
                 case 1:
-                    renderAddProductMenu();
+                    renderAddMenuItem();
                     break;
                 case 2:
-                    renderProductList(controller.getAllProducts());
+                    renderMenuItemList(controller.getAllMenuItems());
                     break;
                 case 3:
+                    renderMenuItemList(controller.getAllMenuItems());
+                    break;
+                case 4:
                     running = false;
-                    System.out.println("Terima kasih telah menggunakan program Mini Market.");
+                    System.out.println("Keluar dari menu");
                     break;
                 default:
                     System.out.println("Pilihan tidak valid!");
@@ -38,39 +42,41 @@ public class MenuItemView {
         }
     }
 
-    private void renderAddProductMenu() {
-        System.out.println("\nPilih Kategori Produk:");
-        System.out.println("1. Mie");
-        System.out.println("2. Buah-buahan");
-        System.out.println("3. Frozen Food");
+    private void renderAddMenuItem() {
+        System.out.println("Pilih Kategori Menu:");
+        System.out.println("1. Kopi");
+        System.out.println("2. Teh");
+        System.out.println("3. Roti");
         int catChoice = InputUtil.inputInt("Pilih kategori (1-3): ");
 
         String id = InputUtil.inputString("Masukkan ID: ");
         String nama = InputUtil.inputString("Masukkan Nama: ");
-        double harga = InputUtil.inputDouble("Masukkan Harga (Rp): ");
+        double hargaBase = InputUtil.inputDouble("Masukkan Harga (Rp): ");
         int stok = InputUtil.inputInt("Masukkan Stok: ");
 
-        // Implementasi try-catch untuk Exception Handling
         try {
             switch (catChoice) {
                 case 1:
                     String rasa = InputUtil.inputString("Masukkan Rasa: ");
                     double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
-                    controller.addMie(id, nama, harga, stok, rasa, beratMie);
-                    System.out.println("-> Produk Mie berhasil ditambahkan!");
+
+                    controller.addKopi(id, nama, harga, stok, rasa, beratMie);
+                    System.out.println("Menu Kopi berhasil ditambahkan!");
                     break;
                 case 2:
                     String jenis = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
                     double beratBuah = InputUtil.inputDouble("Masukkan Berat (kg): ");
                     String kadaluarsaBuah = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                    controller.addBuahBuahan(id, nama, harga, stok, jenis, beratBuah, kadaluarsaBuah);
-                    System.out.println("-> Produk Buah-buahan berhasil ditambahkan!");
+
+                    controller.addTeh(id, nama, hargaBase, stok, jenis, beratBuah, kadaluarsaBuah);
+                    System.out.println("Produk Teh berhasil ditambahkan!");
                     break;
                 case 3:
                     double suhu = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
                     String kadaluarsaFrozen = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
-                    controller.addFrozenFood(id, nama, harga, stok, suhu, kadaluarsaFrozen);
-                    System.out.println("-> Produk Frozen Food berhasil ditambahkan!");
+
+                    controller.addRoti(id, nama, hargaBase, stok, suhu, kadaluarsaFrozen);
+                    System.out.println("Produk Roti berhasil ditambahkan!");
                     break;
                 default:
                     System.out.println("Kategori tidak valid!");
@@ -80,13 +86,12 @@ public class MenuItemView {
         }
     }
 
-    public void renderProductList(List<Product> products) {
-        System.out.println("\n=== DAFTAR SEMUA PRODUK ===");
-        if (products.isEmpty()) {
-            System.out.println("Belum ada produk yang terdaftar.");
+    public void renderMenuItemList(List<MenuItem> menuItems) {
+        if (menuItems.isEmpty()) {
+            System.out.println("Belum ada menu yang terdaftar.");
         } else {
-            for (Product p : products) {
-                System.out.println("• " + p.getProductDetail());
+            for (MenuItem item : menuItems) {
+                System.out.println("• " + item.getOrderDetail());
             }
         }
     }
