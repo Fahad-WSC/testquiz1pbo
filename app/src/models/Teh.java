@@ -2,7 +2,12 @@ import java.util.List;
 
 package src.models;
 public class Teh extends MenuItem implements Customizable {
-
+    private int boba;
+    private int meses;
+    private int karamel;
+    private int jumlah;
+    private Ukuran ukuran;
+    
     public Teh(String id, String nama, double harga, int stok , int boba , int meses ,int karamel , int jumlah, Ukuran ukuran ) {
         super(id, nama, harga, stok);
         this.boba = boba;
@@ -64,14 +69,14 @@ public class Teh extends MenuItem implements Customizable {
     }
 
     public double hitungHargaTotal(int jumlah , String kodePromo) {
-        double totalHarga = getHargaBase() * jumlah * kodePromo.getDiskon();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += boba * 1000;
         totalHarga += karamel * 3000;
         return totalHarga;
     }
 
     public double hitungHargaTotal(int jumlah , Ukuran ukuran) {
-        double totalHarga = getHargaBase() * jumlah * ukuran.getHargaTambahan();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += boba * 1000;
         totalHarga += karamel * 3000;
         return totalHarga;

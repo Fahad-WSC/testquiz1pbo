@@ -27,7 +27,7 @@ public class MenuItemView {
                     renderAddMenuItem();
                     break;
                 case 2:
-                    renderMenuItemList(controller.getAllMenuItems());
+                    renderKustomisasiMenuItem(controller.getAllMenuItems());
                     break;
                 case 3:
                     renderMenuItemList(controller.getAllMenuItems());
@@ -57,33 +57,65 @@ public class MenuItemView {
         try {
             switch (catChoice) {
                 case 1:
-                    String rasa = InputUtil.inputString("Masukkan Rasa: ");
-                    double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
+                    int rum = InputUtil.inputInt("Masukkan Rasa: ");
+                    int es = InputUtil.inputInt("Masukkan Jumlah Es: ");
+                    int gula = InputUtil.inputInt("Masukkan Jumlah Gula: ");
+                    int karamel = InputUtil.inputInt("Masukkan Jumlah Karamel: ");
 
-                    controller.addKopi(id, nama, hargaBase, stok, rum, es, gula, karamel, ukuran);
+                    int jumlah = InputUtil.inputInt("Masukkan Jumlah: ");
+                    Ukuran ukuran = InputUtil.inputUkuran("Masukkan Ukuran: ");
+
+                    controller.addKopi(id, nama, hargaBase, stok, rum, es, gula, karamel, jumlah, ukuran);
                     System.out.println("Menu Kopi berhasil ditambahkan!");
                     break;
                 case 2:
-                    String jenis = InputUtil.inputString("Masukkan Jenis (Lokal / Import): ");
-                    double beratBuah = InputUtil.inputDouble("Masukkan Berat (kg): ");
-                    String kadaluarsaBuah = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
+                    int boba = InputUtil.inputInt("Masukkan Jumlah Boba: ");
+                    int es = InputUtil.inputInt("Masukkan Jumlah Es: ");
+                    int gula = InputUtil.inputInt("Masukkan Jumlah Gula: ");
+                    int karamel = InputUtil.inputInt("Masukkan Jumlah Karamel: ");
 
-                    controller.addTeh(id, nama, hargaBase, stok, jenis, beratBuah, kadaluarsaBuah);
-                    System.out.println("Produk Teh berhasil ditambahkan!");
+                    int jumlah = InputUtil.inputInt("Masukkan Jumlah: ");
+                    Ukuran ukuran = InputUtil.inputUkuran("Masukkan Ukuran: ");
+
+                    controller.addTeh(id, nama, hargaBase, stok, boba, es, gula, karamel, jumlah, ukuran);
+                    System.out.println("Teh berhasil ditambahkan!");
                     break;
                 case 3:
-                    double suhu = InputUtil.inputDouble("Masukkan Suhu Penyimpanan (°C): ");
-                    String kadaluarsaFrozen = InputUtil.inputString("Masukkan Tanggal Kadaluarsa (YYYY-MM-DD): ");
+                    int gula = InputUtil.inputInt("Masukkan Jumlah Gula: ");
+                    int meses = InputUtil.inputInt("Masukkan Jumlah Meses: ");
+                    int karamel = InputUtil.inputInt("Masukkan Jumlah Karamel: ");
 
-                    controller.addRoti(id, nama, hargaBase, stok, suhu, kadaluarsaFrozen);
-                    System.out.println("Produk Roti berhasil ditambahkan!");
+                    int jumlah = InputUtil.inputInt("Masukkan Jumlah: ");
+                    Ukuran ukuran = InputUtil.inputUkuran("Masukkan Ukuran: ");
+
+                    controller.addRoti(id, nama, hargaBase, stok, gula, meses, karamel, jumlah, ukuran);
+                    System.out.println("Roti berhasil ditambahkan");
                     break;
                 default:
-                    System.out.println("Kategori tidak valid!");
+                    System.out.println("Kategori tidak valid");
             }
-        } catch (MarketException e) {
-            System.out.println("[ERROR] Terjadi kesalahan validasi: " + e.getMessage());
+        } catch (MenuTidakDitemukanException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
         }
+    }
+
+    private void renderKustomisasiMenuItem(List<MenuItem> menuItems) {
+        int choice = InputUtil.inputInt("Pilih pesanan untuk dikustomisasi: ");
+
+        if (menuItems.isEmpty()) {
+            System.out.println("Belum ada menu yang terdaftar");
+            return;
+        }
+
+        if (choice < 1 || choice > menuItems.size()) {
+            System.out.println("Pilihan tidak valid!");
+            return;
+        }
+
+
+        MenuItem selectedItem = menuItems.get(choice - 1);
+        System.out.println("Kustomisasi untuk: " + selectedItem);
+
     }
 
     public void renderMenuItemList(List<MenuItem> menuItems) {

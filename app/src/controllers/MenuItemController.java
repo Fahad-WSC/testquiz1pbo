@@ -28,7 +28,7 @@ public class MenuItemController {
         menuItems.add(kopi);
     }
 
-    public void addTeh(String id, String nama, double hargaBase, int stok, String rasa, int jumlah, Ukuran ukuran) throws InputTidakValidException, StokTidakCukupException , MenuTidakDitemukanException {
+    public void addTeh(String id, String nama, double hargaBase, int stok , int boba , int es , int gula, int karamel, int jumlah, Ukuran ukuran) throws InputTidakValidException, StokTidakCukupException , MenuTidakDitemukanException {
         if(id == null || id.isEmpty()) {
             throw new MenuTidakDitemukanException("ID salah");
         }
@@ -38,7 +38,7 @@ public class MenuItemController {
         if (jumlah > stok) {
             throw new StokTidakCukupException("Jumlah melebihi stok yang tersedia");
         }
-        MenuItem teh = new Teh(id, nama, hargaBase, stok, rasa, jumlah, ukuran);
+        MenuItem teh = new Teh(id, nama, hargaBase, stok, boba, es, gula, karamel, jumlah, ukuran);
         menuItems.add(teh);
     }
 

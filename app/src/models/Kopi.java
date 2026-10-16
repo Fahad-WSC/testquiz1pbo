@@ -1,7 +1,13 @@
 package src.models;
 import java.util.List;
 public class Kopi extends MenuItem implements Customizable {
-
+    private int rum;
+    private int es;
+    private int gula;
+    private int karamel;
+    private int jumlah;
+    private Ukuran ukuran;
+    
     public Kopi(String id, String nama, double hargaBase, int stok , int rum , int es , int gula, int karamel,int jumlah, Ukuran ukuran) {
         super(id, nama, hargaBase, stok);
         this.rum = rum;
@@ -54,9 +60,8 @@ public class Kopi extends MenuItem implements Customizable {
     void customize(List<Integer> customizations) {
     }
 
-    @Override 
+    @Override
     void customize(int[] customizations) {
-    
     }
     //--------
 
@@ -70,14 +75,14 @@ public class Kopi extends MenuItem implements Customizable {
     }
 
     public double hitungHargaTotal(int jumlah , String kodePromo) {
-        double totalHarga = getHargaBase() * jumlah * kodePromo.getDiskon();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += rum * 3000;
         totalHarga += karamel * 3000;
         return totalHarga;
     }
 
     public double hitungHargaTotal(int jumlah , Ukuran ukuran) {
-        double totalHarga = getHargaBase() * jumlah * ukuran.getHargaTambahan();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += rum * 3000;
         totalHarga += karamel * 3000;
         return totalHarga;
@@ -87,7 +92,7 @@ public class Kopi extends MenuItem implements Customizable {
     @Override 
     public String getOrderDetail() {
         return String.format("Kopi [%s] (ID: %s) - Harga: Rp%.0f | Stok: %d | Rum: %d | Es: %d | Gula: %d | Karamel: %d | Ukuran: %s",
-                getNama(), getId(), hitungHargaTotal(), getStok(), rum, es, gula, karamel, ukuran.getNama());
+            getNama(), getId(), hitungHargaTotal(jumlah), getStok(), rum, es, gula, karamel, ukuran.getNama());
     }
    
 }

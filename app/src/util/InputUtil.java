@@ -31,4 +31,16 @@ public class InputUtil {
         scanner.nextLine();
         return value;
     }
+
+    public static Ukuran inputUkuran(String message) {
+        System.out.print(message);
+        while (true) {
+            String input = scanner.nextLine().trim().toUpperCase();
+            try {
+                return Ukuran.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.print("Input tidak valid. Masukkan ukuran yang benar (KECIL, SEDANG, BESAR): ");
+            }
+        }
+    }
 }

@@ -1,6 +1,12 @@
 import java.util.List;
 
 public class Roti extends MenuItem implements Customizable {
+    private int gula;
+    private int meses;
+    private int karamel;
+    private int jumlah;
+    private Ukuran ukuran;
+    
     public Roti(String id, String nama, double harga, int stok ,int gula, int meses, int karamel , int jumlah, Ukuran ukuran ) {
         super(id, nama, harga, stok);
         this.gula = gula;
@@ -62,13 +68,13 @@ public class Roti extends MenuItem implements Customizable {
         return totalHarga;
     }
     public double hitungHargaTotal(int jumlah , String kodePromo) {
-        double totalHarga = getHargaBase() * jumlah * kodePromo.getDiskon();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += meses * 500;
         totalHarga += karamel * 3000;
         return totalHarga;
     }
     public double hitungHargaTotal(int jumlah , Ukuran ukuran) {
-        double totalHarga = getHargaBase() * jumlah * ukuran.getHargaTambahan();
+        double totalHarga = getHargaBase() * jumlah;
         totalHarga += meses * 500;
         totalHarga += karamel * 3000;
         return totalHarga;
