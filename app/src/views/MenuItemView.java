@@ -60,7 +60,7 @@ public class MenuItemView {
                     String rasa = InputUtil.inputString("Masukkan Rasa: ");
                     double beratMie = InputUtil.inputDouble("Masukkan Berat (gram): ");
 
-                    controller.addKopi(id, nama, harga, stok, rasa, beratMie);
+                    controller.addKopi(id, nama, hargaBase, stok, rum, es, gula, karamel, ukuran);
                     System.out.println("Menu Kopi berhasil ditambahkan!");
                     break;
                 case 2:
