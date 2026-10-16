@@ -35,6 +35,28 @@ public class Kopi extends MenuItem implements Customizable {
         this.karamel = karamel;
     }
 
+    @Override
+    void customize(List<Integer> customizations) {
+    
+    }
 
+    @Override 
+    void customize(int[] customizations) {
+    
+    }
+
+    @Override
+    public double hitungHargaTotal() {
+        double totalHarga = getHargaBase();
+        totalHarga += rum * 3000; 
+        totalHarga += karamel * 3000; 
+        return totalHarga;
+    }
+
+    @Override 
+    public String getOrderDetail() {
+        return String.format("Kopi [%s] (ID: %s) - Harga: Rp%.0f | Stok: %d | Rum: %d | Es: %d | Gula: %d | Karamel: %d",
+                getNama(), getId(), hitungHargaTotal(), getStok(), rum, es, gula, karamel);
+    }
    
 }

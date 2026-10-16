@@ -3,6 +3,7 @@ package pbo.controllers;
 import pbo.models.*;
 import pbo.exceptions.InputTidakValidException;
 import pbo.exceptions.StokTidakCukupException;
+import pbo.exceptions.MenuTidakDitemukanException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,10 @@ public class MenuItemController {
         this.menuItems = new ArrayList<>();
     }
 
-    public void addKopi(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addKopi(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException , MenuTidakDitemukanException {
+        if(id == null || id.isEmpty()) {
+            throw new MenuTidakDitemukanException("ID salah");
+        }
         if (jumlah < 0 ) {
             throw new InputTidakValidException("JumlahTidak boleh 0");
         } 
@@ -24,7 +28,10 @@ public class MenuItemController {
         menuItems.add(kopi);
     }
 
-    public void addTeh(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addTeh(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException , MenuTidakDitemukanException {
+        if(id == null || id.isEmpty()) {
+            throw new MenuTidakDitemukanException("ID salah");
+        }
         if (jumlah < 0 ) {
             throw new InputTidakValidException("JumlahTidak boleh 0");
         } 
@@ -35,7 +42,10 @@ public class MenuItemController {
         menuItems.add(teh);
     }
 
-    public void addRoti(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException {
+    public void addRoti(String id, String nama, double hargaBase, int stok, String rasa, int jumlah) throws InputTidakValidException, StokTidakCukupException , MenuTidakDitemukanException {
+        if(id == null || id.isEmpty()) {
+            throw new MenuTidakDitemukanException("ID salah");
+        }
         if (jumlah < 0 ) {
             throw new InputTidakValidException("Jumlah Tidak boleh 0");
         }
