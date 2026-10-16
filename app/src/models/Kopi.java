@@ -1,98 +1,43 @@
-package src.models;
 import java.util.List;
-public class Kopi extends MenuItem implements Customizable {
-    private int rum;
-    private int es;
-    private int gula;
-    private int karamel;
-    private int jumlah;
-    private Ukuran ukuran;
-    
-    public Kopi(String id, String nama, double hargaBase, int stok , int rum , int es , int gula, int karamel,int jumlah, Ukuran ukuran) {
+
+public class Kopi extends MenuItem {
+    private int rum;    // 0-1 (+3000)
+    private int es;     // 0-5 (free)
+    private int gula;   // 0-5 (free)
+    private int karamel;// 0-5 (+3000)
+
+    public Kopi(String id, String nama, double hargaBase, int stok) {
         super(id, nama, hargaBase, stok);
-        this.rum = rum;
-        this.es = es;
-        this.gula = gula;
-        this.karamel = karamel;
-        this.jumlah = jumlah;
-        this.ukuran = ukuran;
-    }
-
-    public int getRum() {
-        return rum;
-    }
-    public void setRum(int rum) {
-        this.rum = rum;
-    }
-    public int getEs() {
-        return es;
-    }
-    public void setEs(int es) {
-        this.es = es;
-    }
-    public int getGula() {
-        return gula;
-    }
-    public void setGula(int gula) {
-        this.gula = gula;
-    }
-    public int getKaramel() {
-        return karamel;
-    }
-    public void setKaramel(int karamel) {
-        this.karamel = karamel;
-    }
-    public Ukuran getUkuran() {
-        return ukuran;
-    }
-    public void setUkuran(Ukuran ukuran) {
-        this.ukuran = ukuran;
-    }
-    public int getJumlah() {
-        return jumlah;
-    }
-    public void setJumlah(int jumlah) {
-        this.jumlah = jumlah;
-    }
-
-    //Gatau cara pakainya
-    @Override
-    void customize(List<Integer> customizations) {
     }
 
     @Override
-    void customize(int[] customizations) {
+    public void customize(List<Integer> customizations) {
+        if (customizations != null && customizations.size() >= 4) {
+            this.rum = Math.min(Math.max(customizations.get(0), 0), 1);
+            this.es = Math.min(Math.max(customizations.get(1), 0), 5);
+            this.gula = Math.min(Math.max(customizations.get(2), 0), 5);
+            this.karamel = Math.min(Math.max(customizations.get(3), 0), 5);
+        }
     }
-    //--------
-
 
     @Override
-    public double hitungHargaTotal(int jumlah) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += rum * 3000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
+    public void customize(int[] customizations) {
+        if (customizations != null && customizations.length >= 4) {
+            this.rum = Math.min(Math.max(customizations[0], 0), 1);
+            this.es = Math.min(Math.max(customizations[1], 0), 5);
+            this.gula = Math.min(Math.max(customizations[2], 0), 5);
+            this.karamel = Math.min(Math.max(customizations[3], 0), 5);
+        }
     }
 
-    public double hitungHargaTotal(int jumlah , String kodePromo) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += rum * 3000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
+    @Override
+    public double hitungHargaTotal() {
+        double tambahan = (rum * 3000.0) + (karamel * 3000.0);
+        return getHargaBase() + tambahan;
     }
 
-    public double hitungHargaTotal(int jumlah , Ukuran ukuran) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += rum * 3000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
-    }
-
-
-    @Override 
+    @Override
     public String getOrderDetail() {
-        return String.format("Kopi [%s] (ID: %s) - Harga: Rp%.0f | Stok: %d | Rum: %d | Es: %d | Gula: %d | Karamel: %d | Ukuran: %s",
-            getNama(), getId(), hitungHargaTotal(jumlah), getStok(), rum, es, gula, karamel, ukuran.getNama());
+        return getNama() + " [Kopi] - Rum: " + rum + ", Es: " + es + ", Gula: " + gula + ", Karamel: " + karamel;
     }
-   
 }

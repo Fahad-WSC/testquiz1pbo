@@ -1,6 +1,6 @@
-package pbo.models;
+import java.util.List;
 
-public abstract class MenuItem {
+public abstract class MenuItem implements Customizable {
     private String id;
     private String nama;
     private double hargaBase;
@@ -14,30 +14,44 @@ public abstract class MenuItem {
     }
 
     public String getId() {
-        return id; 
+        return id;
     }
-    public void setId(String id) { 
-        this.id = id; 
+
+    public String getNama() {
+        return nama;
     }
-    public String getNama() { 
-        return nama; 
+
+    public double getHargaBase() {
+        return hargaBase;
     }
-    public void setNama(String nama) { 
-        this.nama = nama; 
+
+    public int getStok() {
+        return stok;
     }
-    public double getHargaBase() { 
-        return hargaBase; 
-    }
-    public void setHargaBase(double hargaBase) { 
-        this.hargaBase = hargaBase ; 
-    }
-    public int getStok() { 
-        return stok; 
-    }
-    public void setStok(int stok) { 
-        this.stok = stok; 
+
+    public void setStok(int stok) {
+        this.stok = stok;
     }
 
     public abstract double hitungHargaTotal();
     public abstract String getOrderDetail();
+
+    // Overloading Method Pemesanan / Hitung Harga
+    public double hitungHargaTotal(int jumlah) {
+        return hitungHargaTotal() * jumlah;
+    }
+
+    public double hitungHargaTotal(int jumlah, String kodePromo) {
+        double total = hitungHargaTotal(jumlah);
+        if ("PROMO10".equalsIgnoreCase(kodePromo)) {
+            total *= 0.90; // Diskon 10%
+        } else if ("PROMO20".equalsIgnoreCase(kodePromo)) {
+            total *= 0.80; // Diskon 20%
+        }
+        return total;
+    }
+
+    public double hitungHargaTotal(int jumlah, EnumUkuran ukuran) {
+        return hitungHargaTotal(jumlah) * ukuran.getMultiplier();
+    }
 }

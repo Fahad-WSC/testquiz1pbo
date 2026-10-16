@@ -1,91 +1,43 @@
 import java.util.List;
 
-package src.models;
-public class Teh extends MenuItem implements Customizable {
-    private int boba;
-    private int meses;
-    private int karamel;
-    private int jumlah;
-    private Ukuran ukuran;
-    
-    public Teh(String id, String nama, double harga, int stok , int boba , int meses ,int karamel , int jumlah, Ukuran ukuran ) {
-        super(id, nama, harga, stok);
-        this.boba = boba;
-        this.meses = meses;
-        this.karamel = karamel;
-        this.jumlah = jumlah;
-        this.ukuran = ukuran;
-    }
-    
-    public int getBoba() {
-        return boba;
-    }
-    public void setBoba(int boba) {
-        this.boba = boba;
-    }
-    public int getMeses() {
-        return meses;
-    }
-    public void setMeses(int meses) {
-        this.meses = meses;
-    }
-    public int getKaramel() {
-        return karamel;
-    }
-    public void setKaramel(int karamel) {
-        this.karamel = karamel;
-    }
-    public Ukuran getUkuran() {
-        return ukuran;
-    }
-    public void setUkuran(Ukuran ukuran) {
-        this.ukuran = ukuran;
-    }
-    public int getJumlah() {
-        return jumlah;
-    }
-    public void setJumlah(int jumlah) {
-        this.jumlah = jumlah;
-    }
+public class Teh extends MenuItem {
+    private int boba;   // 0-3 (+1000)
+    private int es;     // 0-5 (free)
+    private int gula;   // 0-5 (free)
+    private int karamel;// 0-5 (+3000)
 
-    //Gatau cara pakainya
-    @Override
-    void customize(List<Integer> customizations) {
+    public Teh(String id, String nama, double hargaBase, int stok) {
+        super(id, nama, hargaBase, stok);
     }
-
-    @Override 
-    void customize(int[] customizations) {
-    
-    }
-    //--------
-
 
     @Override
-    public double hitungHargaTotal(int jumlah) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += boba * 1000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
+    public void customize(List<Integer> customizations) {
+        if (customizations != null && customizations.size() >= 4) {
+            this.boba = Math.min(Math.max(customizations.get(0), 0), 3);
+            this.es = Math.min(Math.max(customizations.get(1), 0), 5);
+            this.gula = Math.min(Math.max(customizations.get(2), 0), 5);
+            this.karamel = Math.min(Math.max(customizations.get(3), 0), 5);
+        }
     }
 
-    public double hitungHargaTotal(int jumlah , String kodePromo) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += boba * 1000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
+    @Override
+    public void customize(int[] customizations) {
+        if (customizations != null && customizations.length >= 4) {
+            this.boba = Math.min(Math.max(customizations[0], 0), 3);
+            this.es = Math.min(Math.max(customizations[1], 0), 5);
+            this.gula = Math.min(Math.max(customizations[2], 0), 5);
+            this.karamel = Math.min(Math.max(customizations[3], 0), 5);
+        }
     }
 
-    public double hitungHargaTotal(int jumlah , Ukuran ukuran) {
-        double totalHarga = getHargaBase() * jumlah;
-        totalHarga += boba * 1000;
-        totalHarga += karamel * 3000;
-        return totalHarga;
+    @Override
+    public double hitungHargaTotal() {
+        double tambahan = (boba * 1000.0) + (karamel * 3000.0);
+        return getHargaBase() + tambahan;
     }
 
-
-    @Override 
+    @Override
     public String getOrderDetail() {
-        return String.format("Teh [%s] (ID: %s) - Harga: Rp%.0f | Stok: %d | Boba: %d | Meses: %d | Karamel: %d | Ukuran: %s",
-                getNama(), getId(), hitungHargaTotal(), getStok(), boba, meses, karamel, ukuran.getNama());
+        return getNama() + " [Teh] - Boba: " + boba + ", Es: " + es + ", Gula: " + gula + ", Karamel: " + karamel;
     }
 }
