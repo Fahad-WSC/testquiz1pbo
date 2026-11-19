@@ -1,22 +1,20 @@
-package manajemenproyek.view;
+package belanjaleveltinggi.view;
 
 import java.util.Scanner;
 
-public class TampilanSprint {
+public class BelanjaView {
     private Scanner scanner;
 
-    public TampilanSprint() {
+    public BelanjaView() {
         this.scanner = new Scanner(System.in);
     }
 
     public void tampilkanMenu() {
-        System.out.println("\n=== MANAJEMEN SPRINT TIM (LEVEL LANJUT) ===");
-        System.out.println("1. Tambah Tugas Pengembangan");
-        System.out.println("2. Lihat Semua Tugas di Sprint");
-        System.out.println("3. Hitung Skor Tugas (Strategy Pattern)");
-        System.out.println("4. Selesaikan & Cetak Laporan Tugas (Anonymous Inner Class)");
-        System.out.println("5. Kirim Update ke Kanal Tim (Mediator + Filter)");
-        System.out.println("6. Lihat Log Aktivitas Tim");
+        System.out.println("\n=== BELANJA & KUPON (TOPIK SIMPEL, LEVEL TINGGI) ===");
+        System.out.println("1. Lihat Barang di Rak");
+        System.out.println("2. Hitung Belanja + Kupon (Strategy + Custom Exception)");
+        System.out.println("3. Kirim Info ke Kasir Lain (Mediator)");
+        System.out.println("4. Lihat Log Kasir");
         System.out.println("0. Keluar");
         System.out.print("Pilih menu: ");
     }
